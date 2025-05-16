@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search by Image - Kajaria</title>
+</head>
+<body>
+    <h1>Search by Image</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Upload Image:</label><br>
+        <input type="file" name="image" accept="image/*"><br><br>
+        <label>Or Enter Description:</label><br>
+        <input type="text" name="description" placeholder="e.g., white marble glossy"><br>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if matches %}
+        <h2>Matching Tiles</h2>
+        {% for match in matches %}
+            <div style="margin-bottom: 10px;">
+                <img src="{{ url_for('static', filename='tiles/' + match[0]) }}" width="200"><br>
+                <strong>{{ match[0] }}</strong> — Similarity: {{ '%.2f'|format(match[1] * 100) }}%
+            </div>
+        {% endfor %}
+    {% elif filename %}
+        <p><strong>No matching tiles found.</strong></p>
+    {% endif %}
+</body>
+</html>
